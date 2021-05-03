@@ -1,8 +1,8 @@
 from flask import render_template, request, redirect, url_for, abort
 from . import main
-from flask_login import login_required
+from flask_login import login_required, current_user
 from ..models import User, Blog, Comment, Quotes
-from .forms import UpdateProfile
+from .forms import UpdateProfile, BlogForm, CommentForm
 from .. import db
 
 # Views
@@ -55,3 +55,24 @@ def update_profile(uname):
         return redirect(url_for('.profile', uname=user.username))
 
     return render_template('profile/update.html', form=form)
+
+
+@main.route('/blogs/new', methods = ['GET','POST'])
+@login_required
+def new_blog():
+    """
+    Function that returns the blog page.
+    """
+
+    form = BlogForm()
+
+    if form.validate_on_submit():
+        username = form.username.data
+        title = form.title.data
+        description = form.description.data
+        new_blog = Blog(blog_username=username, title=title, description=description)
+        new_blog.saveBlog()
+        return redirect(url_for('main.index'))
+
+    title = 'New Blog'
+    return render_template('blog.html', title=title, form=form)
