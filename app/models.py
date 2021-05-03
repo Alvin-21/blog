@@ -67,7 +67,7 @@ class Blog(db.Model):
         blogs = Blog.query.order_by(Blog.time.desc()).all()
         return blogs
 
-class Comment():
+class Comment(db.Model):
     """
     Class for defining comments for blog posts.
     """

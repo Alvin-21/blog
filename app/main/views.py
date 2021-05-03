@@ -76,3 +76,22 @@ def new_blog():
 
     title = 'New Blog'
     return render_template('blog.html', title=title, form=form)
+
+
+@main.route('/blog/comment/<int:blog_id>', methods=['GET', 'POST'])
+@login_required
+def new_comment(blog_id):
+    """
+    Function that returns the comment page.
+    """
+
+    form = CommentForm()
+
+    if form.validate_on_submit():
+        comment = form.comment.data
+        new_comment = Comment(text=comment, blog_id=blog_id, comment_username=current_user.username)
+        new_comment.save_comment()
+        return redirect(url_for('.view_pitch', blog_id=blog_id))
+
+    title = 'New Comment'
+    return render_template('comment.html', title=title, form=form)
