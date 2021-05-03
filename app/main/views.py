@@ -91,7 +91,21 @@ def new_comment(blog_id):
         comment = form.comment.data
         new_comment = Comment(text=comment, blog_id=blog_id, comment_username=current_user.username)
         new_comment.save_comment()
-        return redirect(url_for('.view_pitch', blog_id=blog_id))
+        return redirect(url_for('.view_blog', blog_id=blog_id))
 
     title = 'New Comment'
     return render_template('comment.html', title=title, form=form)
+
+
+@main.route('/blog/view/<int:blog_id>', methods=['GET', 'POST'])
+def view_blog(blog_id):
+    """
+    Function that returns the view page for a blog.
+    """
+
+    blog = Blog.query.filter_by(id=blog_id).first()
+    comments = Comment.get_comments(blog_id)
+    
+    title = "View Blog"
+    
+    return render_template('view.html', title=title, blog=blog, comments=comments, id=blog_id)
