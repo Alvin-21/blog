@@ -4,6 +4,11 @@
 
 <section class="container">
     <h1 class="text-center">WELCOME TO ALVIN'S BLOG</h1>
+    <h2>Here's a random quote for you:</h2>
+    <div class="text-center text-danger">
+        <h4>{{quotes.quote}}</h4>
+        <h4>By: {{quotes.author}}</h4>
+    </div>
     <p>This is a web application that gives you the opportunity to post a blog of whichever topic you please.</p>
     <p>To post a blog, please <a href="{{url_for('auth.login')}}" target="_blank">LOGIN</a>. If you have already logged in, click <a href="/blogs/new" target="_blank">here</a>.</p>
     <h2><u>All Blogs</u></h2>

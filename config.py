@@ -8,6 +8,8 @@ class Config:
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://Alvin:monkey@localhost/blog'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOADED_PHOTOS_DEST ='app/static/photos'
+    QUOTE_BASE_URL ='http://quotes.stormconsultancy.co.uk/random.json'
+    SECRET_KEY="kifunguochasiri"
 
 
 class ProdConfig(Config):

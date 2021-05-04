@@ -3,6 +3,7 @@ from . import main
 from flask_login import login_required, current_user
 from ..models import User, Blog, Comment, Quotes
 from .forms import UpdateProfile, BlogForm, CommentForm
+from ..requests import get_quotes
 from .. import db, photos
 
 # Views
@@ -12,10 +13,11 @@ def index():
     Function that returns the index page and its data.
     '''
     
+    quotes = get_quotes()
     blogs = Blog.getallBlogs()
     title = 'Home'
 
-    return render_template('index.html', title=title, blogs=blogs)
+    return render_template('index.html', title=title, blogs=blogs, quotes=quotes)
 
 @main.route('/user/<uname>')
 def profile(uname):
