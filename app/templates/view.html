@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="container">
+    <div class="card text-white bg-primary mb-3">
+        <div class="card-body">
+            <h5 class="card-title">{{blog.title}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{blog.blog_username}}</h6>
+            <p class='card-text'>{{blog.description}}</p>
+            <p class="card-text"><small class="text-muted">Posted on {{blog.time.strftime('%d/%m/%Y %X')}}</small></p>
+        </div>
+    </div>
+    <p>To comment on this post click on the comment button below:</p>
+    <a class="btn btn-dark text-center" href="{{url_for('main.new_comment', blog_id=blog.id)}}" target="_blank">
+        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Comment
+    </a>
+    <h4>Comments</h4>
+    {% for comment in comments %}
+    <div class="card bg-light">
+        <div class="card-body">
+            <h5 class="card-title">{{comment.comment_username}}</h5>
+            <p class="card-text">{{comment.text}}</p>
+            <p class="card-text"><small class="text-muted">Posted on {{comment.time.strftime('%d/%m/%Y %X')}}</small></p>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+
+{% endblock %}
