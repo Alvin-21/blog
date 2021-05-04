@@ -23,6 +23,11 @@
             <p class="card-text">{{comment.text}}</p>
             <p class="card-text"><small class="text-muted">Posted on {{comment.time.strftime('%d/%m/%Y %X')}}</small></p>
         </div>
+        {% if comment.user == current_user%}
+        <div class="card-footer">
+            <a href="{{url_for('main.delete_comment', comment_id=comment.id)}}" class="btn btn-danger btn-sm">Delete</a>
+        </div>
+        {% endif %}
     </div>
     {% endfor %}
 </section>

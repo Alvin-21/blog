@@ -132,7 +132,7 @@ def view_blog(blog_id):
     return render_template('view.html', title=title, blog=blog, comments=comments, id=blog_id)
 
 
-@main.route('/blog/delete/<int:id>', methods=['GET', 'POST'])
+@main.route('/blog/delete/<int:blog_id>', methods=['GET', 'POST'])
 @login_required
 def delete_blog(blog_id):
     blog = Blog.query.filter_by(id=blog_id).first()
@@ -142,7 +142,7 @@ def delete_blog(blog_id):
     return render_template('index.html')
 
 
-@main.route('/blog/update/<int:id>', methods=['GET', 'POST'])
+@main.route('/blog/update/<int:blog_id>', methods=['GET', 'POST'])
 @login_required
 def updateBlog(blog_id):
     blog = Blog.query.filter_by(id=blog_id).first()
@@ -154,4 +154,15 @@ def updateBlog(blog_id):
         db.session.add(blog)
         db.session.commit()
 
-        return render_template('index.html')
+        return redirect(url_for('main.view_blog'))
+
+
+@main.route('/comment/delete/<int:comment_id>', methods=['GET', 'POST'])
+@login_required
+def deleteComment(comment_id):
+    comment = Comment.query.filter_by(id=comment_id).first()
+    db.session.delete(comment)
+    db.session.commit()
+    flash('comment succesfully deleted')
+
+    return redirect(url_for('main.index'))
