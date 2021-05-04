@@ -21,7 +21,7 @@
             <p class="card-text"><small class="text-muted">Posted on {{blog.time.strftime('%d/%m/%Y %X')}}</small></p>
         </div>
         <div class="card-footer">
-            <a class="btn btn-dark btn-sm" href="#">View Comments</a>
+            <a class="btn btn-dark btn-sm" href="{{url_for('main.view_blog', blog_id=blog.id)}}">View Comments</a>
             {% if blog.user == current_user%}
             <a href="#" class="btn btn-warning btn-sm">Update</a>
             <a href="#" class="btn btn-danger btn-sm">Delete</a>
