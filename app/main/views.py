@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, abort
+from flask import render_template, request, redirect, url_for, abort, flash
 from . import main
 from flask_login import login_required, current_user
 from ..models import User, Blog, Comment, Quotes
@@ -130,3 +130,13 @@ def view_blog(blog_id):
     title = "View Blog"
     
     return render_template('view.html', title=title, blog=blog, comments=comments, id=blog_id)
+
+
+@main.route('/blog/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete_blog(blog_id):
+    blog = Blog.query.filter_by(id=blog_id).first()
+    db.session.delete(blog)
+    db.session.commit()
+    flash('Blog succesfully deleted.')
+    return render_template('index.html')
