@@ -58,8 +58,8 @@ class Blog(db.Model):
         db.session.commit()    
 
     @classmethod
-    def getBlogs(cls, username):
-        blogs = Blog.query.filter_by(blog_username=username).order_by(Blog.time.desc()).all()
+    def getBlogs(cls, id):
+        blogs = Blog.query.filter_by(user_id=id).order_by(Blog.time.desc()).all()
         return blogs
 
     @classmethod
