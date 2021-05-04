@@ -91,7 +91,7 @@ def new_blog():
         username = form.username.data
         title = form.title.data
         description = form.description.data
-        new_blog = Blog(blog_username=username, title=title, description=description)
+        new_blog = Blog(blog_username=username, title=title, description=description, user= current_user)
         new_blog.saveBlog()
         return redirect(url_for('main.index'))
 
@@ -110,7 +110,7 @@ def new_comment(blog_id):
 
     if form.validate_on_submit():
         comment = form.comment.data
-        new_comment = Comment(text=comment, blog_id=blog_id, comment_username=current_user.username)
+        new_comment = Comment(text=comment, blog_id=blog_id, comment_username=current_user.username, user=current_user)
         new_comment.save_comment()
         return redirect(url_for('.view_blog', blog_id=blog_id))
 
@@ -140,3 +140,18 @@ def delete_blog(blog_id):
     db.session.commit()
     flash('Blog succesfully deleted.')
     return render_template('index.html')
+
+
+@main.route('/blog/update/<int:id>', methods=['GET', 'POST'])
+@login_required
+def updateBlog(blog_id):
+    blog = Blog.query.filter_by(id=blog_id).first()
+    form = BlogForm()
+
+    if form.validate_on_submit():
+        blog.title = form.title.data
+        blog.description = form.description.data
+        db.session.add(blog)
+        db.session.commit()
+
+        return render_template('index.html')
