@@ -11,10 +11,11 @@ def index():
     '''
     Function that returns the index page and its data.
     '''
-
+    
+    blogs = Blog.getallBlogs()
     title = 'Home'
 
-    return render_template('index.html', title=title)
+    return render_template('index.html', title=title, blogs=blogs)
 
 @main.route('/user/<uname>')
 def profile(uname):

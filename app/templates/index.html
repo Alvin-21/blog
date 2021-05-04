@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="container">
+    <h1 class="text-center">WELCOME TO ALVIN'S BLOG</h1>
+    <p>This is a web application that gives you the opportunity to post a blog of whichever topic you please.</p>
+    <p>To post a blog, please <a href="{{url_for('auth.login')}}" target="_blank">LOGIN</a>. If you have already logged in, click <a href="/blogs/new" target="_blank">here</a>.</p>
+    <h2><u>All Blogs</u></h2>
+    {% for blog in blogs %}
+    <div class="card text-white bg-primary mb-3">
+        <div class="card-body">
+            <h5 class="card-title">{{blog.title}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{blog.blog_username}}</h6>
+            <p class='card-text'>{{blog.description}}</p>
+            <p class="card-text"><small class="text-muted">Posted on {{blog.time.strftime('%d/%m/%Y %X')}}</small></p>
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-dark btn-sm" href="#">View Comments</a>
+            {% if blog.user == current_user%}
+            <a href="#" class="btn btn-warning btn-sm">Update</a>
+            <a href="#" class="btn btn-danger btn-sm">Delete</a>
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+    {% endfor %}
+</section>
+
+{% endblock %}
